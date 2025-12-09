@@ -50,7 +50,7 @@ const allowedOrigins = Array.from(new Set([
     process.env.ADMIN_URL,
     process.env.MENU_URL,
     process.env.KDS_URL,
-    toAbsoluteOrigin(process.env.VERCEL_URL),
+    toAbsoluteOrigin(process.env.NETLIFY_URL),
     ...expandEnvOrigins(process.env.CORS_ALLOWED_ORIGINS),
     'http://localhost:3000',
     'http://localhost:5503',
