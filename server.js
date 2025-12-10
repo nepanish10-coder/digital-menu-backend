@@ -45,6 +45,11 @@ const expandEnvOrigins = (value) => {
         .filter(Boolean);
 };
 
+const fallbackHostedOrigins = [
+    'https://digitalmenuai.netlify.app',
+    process.env.RAILWAY_PUBLIC_DOMAIN && `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+];
+
 const allowedOrigins = Array.from(new Set([
     process.env.FRONTEND_URL,
     process.env.ADMIN_URL,
@@ -52,6 +57,7 @@ const allowedOrigins = Array.from(new Set([
     process.env.KDS_URL,
     toAbsoluteOrigin(process.env.NETLIFY_URL),
     ...expandEnvOrigins(process.env.CORS_ALLOWED_ORIGINS),
+    ...fallbackHostedOrigins,
     'http://localhost:3000',
     'http://localhost:5503',
     'http://127.0.0.1:3000',
