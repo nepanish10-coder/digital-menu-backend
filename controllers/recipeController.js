@@ -25,10 +25,10 @@ async function getRecipeById(req, res) {
 
 // Create new recipe
 async function createRecipe(req, res) {
-  const { id, name, category, verified, ingredients, instructions } = req.body;
+  const { id, name, category, ingredients, instructions } = req.body;
   const { data, error } = await supabase
     .from('recipes')
-    .insert([{ id, name, category, verified, ingredients, instructions }])
+    .insert([{ id, name, category, ingredients, instructions }])
     .select()
     .single();
   if (error) return res.status(400).json({ error: error.message });
@@ -38,10 +38,10 @@ async function createRecipe(req, res) {
 // Update recipe
 async function updateRecipe(req, res) {
   const { id } = req.params;
-  const { name, category, verified, ingredients, instructions } = req.body;
+  const { name, category, ingredients, instructions } = req.body;
   const { data, error } = await supabase
     .from('recipes')
-    .update({ name, category, verified, ingredients, instructions })
+    .update({ name, category, ingredients, instructions })
     .eq('id', id)
     .select()
     .single();
