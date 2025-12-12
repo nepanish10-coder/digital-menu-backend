@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
+
 const recipeController = require('../controllers/recipeController');
+const { authenticateToken, multiTenant } = require('../middleware/auth');
+
+
+// All recipe routes require authentication and tenant context
+router.use(authenticateToken);
+router.use(multiTenant);
 
 // GET /api/recipes - get all recipes
 router.get('/', recipeController.getAllRecipes);

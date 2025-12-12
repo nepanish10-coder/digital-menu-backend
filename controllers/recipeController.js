@@ -25,8 +25,23 @@ async function getRecipeById(req, res) {
 
 // Create new recipe
 async function createRecipe(req, res) {
-  const { id, name, category, ingredients, instructions } = req.body;
-  const insertObj = { name, category, ingredients, instructions };
+  // Require restaurantId from auth middleware
+  const restaurantId = req.restaurantId;
+  if (!restaurantId) {
+    return res.status(400).json({ error: 'Missing restaurant context' });
+  }
+  const { id, name, category, description, prepTime, yield: portion_yield, ingredients, instructions } = req.body;
+  // Map frontend fields to DB columns
+  const insertObj = {
+    restaurant_id: restaurantId,
+    name,
+    category,
+    description: description || '',
+    prep_time: prepTime || '',
+    portion_yield: portion_yield || 1,
+    ingredients: Array.isArray(ingredients) ? ingredients : [],
+    instructions: Array.isArray(instructions) ? instructions : []
+  };
   if (id) insertObj.id = id;
   const { data, error } = await supabase
     .from('recipes')
