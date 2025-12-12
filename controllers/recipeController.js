@@ -26,9 +26,11 @@ async function getRecipeById(req, res) {
 // Create new recipe
 async function createRecipe(req, res) {
   const { id, name, category, ingredients, instructions } = req.body;
+  const insertObj = { name, category, ingredients, instructions };
+  if (id) insertObj.id = id;
   const { data, error } = await supabase
     .from('recipes')
-    .insert([{ id, name, category, ingredients, instructions }])
+    .insert([insertObj])
     .select()
     .single();
   if (error) return res.status(400).json({ error: error.message });
