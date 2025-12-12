@@ -1,15 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const recipeController = require('../controllers/recipeController');
-const { authenticateToken, multiTenant } = require('../middleware/auth');
 
-router.use(authenticateToken);
-router.use(multiTenant);
+// GET /api/recipes - get all recipes
+router.get('/', recipeController.getAllRecipes);
 
-router.get('/', recipeController.listRecipes);
+// GET /api/recipes/:id - get one recipe
+router.get('/:id', recipeController.getRecipeById);
+
+// POST /api/recipes - create new recipe
 router.post('/', recipeController.createRecipe);
-router.get('/:recipeId', recipeController.getRecipe);
-router.put('/:recipeId', recipeController.updateRecipe);
-router.delete('/:recipeId', recipeController.deleteRecipe);
+
+// PUT /api/recipes/:id - update recipe
+router.put('/:id', recipeController.updateRecipe);
+
+// DELETE /api/recipes/:id - delete recipe
+router.delete('/:id', recipeController.deleteRecipe);
 
 module.exports = router;
+
