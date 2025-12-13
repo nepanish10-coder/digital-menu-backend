@@ -49,7 +49,7 @@ async function createRecipe(req, res) {
     .select()
     .single();
   if (error) return res.status(400).json({ error: error.message });
-  res.status(201).json(data);
+  res.status(201).json({ recipe: data, message: 'Recipe created' });
 }
 
 // Update recipe
